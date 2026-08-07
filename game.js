@@ -151,6 +151,10 @@ const el = {
   btnGameoverLeaderboard: document.getElementById("btn-gameover-leaderboard"),
   btnPlayAgain: document.getElementById("btn-play-again"),
   btnWinLeaderboard: document.getElementById("btn-win-leaderboard"),
+  btnSubmitGameover: document.getElementById("btn-submit-gameover"),
+  btnSkipGameover: document.getElementById("btn-skip-gameover"),
+  btnSubmitWin: document.getElementById("btn-submit-win"),
+  btnSkipWin: document.getElementById("btn-skip-win"),
   firebaseStatus: document.getElementById("firebase-status"),
   lives: document.getElementById("lives"),
   scoreEl: document.getElementById("score"),
@@ -480,32 +484,44 @@ function catchAxolotl(item) {
   addPopup(item.x, player.y, `+${item.points}`, item.points > 10 ? "#ffb703" : "#12c2c2");
 }
 
-async function loseGame() {
+function loseGame() {
   state = "gameover";
   el.finalScore.textContent = score;
   el.finalLevel.textContent = `${levelIndex + 1} / ${LEVELS.length}`;
   showScreen("gameover");
-  el.submitStatus.textContent = "Saving your score…";
+  resetLeaderboardChoice(el.btnSubmitGameover, el.btnSkipGameover, el.submitStatus);
+}
+
+function winGame() {
+  state = "win";
+  el.winScore.textContent = score;
+  el.winLives.textContent = lives;
+  showScreen("win");
+  resetLeaderboardChoice(el.btnSubmitWin, el.btnSkipWin, el.winSubmitStatus);
+}
+
+function resetLeaderboardChoice(submitBtn, skipBtn, statusEl) {
+  submitBtn.disabled = false;
+  skipBtn.disabled = false;
+  statusEl.textContent = "Add your score to the global leaderboard?";
+}
+
+async function submitCurrentScore(submitBtn, skipBtn, statusEl, levelReached) {
+  submitBtn.disabled = true;
+  skipBtn.disabled = true;
+  statusEl.textContent = "Saving your score…";
   const name = getSavedName();
-  const result = await submitScore(name, score, levelIndex + 1);
-  el.submitStatus.textContent =
+  const result = await submitScore(name, score, levelReached);
+  statusEl.textContent =
     result.mode === "online"
       ? "🌐 Score saved to the online leaderboard!"
       : "💾 Score saved to your local leaderboard.";
 }
 
-async function winGame() {
-  state = "win";
-  el.winScore.textContent = score;
-  el.winLives.textContent = lives;
-  showScreen("win");
-  el.winSubmitStatus.textContent = "Saving your score…";
-  const name = getSavedName();
-  const result = await submitScore(name, score, LEVELS.length);
-  el.winSubmitStatus.textContent =
-    result.mode === "online"
-      ? "🌐 Score saved to the online leaderboard!"
-      : "💾 Score saved to your local leaderboard.";
+function skipCurrentScore(submitBtn, skipBtn, statusEl) {
+  submitBtn.disabled = true;
+  skipBtn.disabled = true;
+  statusEl.textContent = "Kept private — your score was not added to the leaderboard.";
 }
 
 function getSavedName() {
@@ -809,6 +825,18 @@ function bindUi() {
   el.btnPlayAgain.addEventListener("click", () => startCountdown());
   el.btnGameoverLeaderboard.addEventListener("click", () => openLeaderboard("gameover"));
   el.btnWinLeaderboard.addEventListener("click", () => openLeaderboard("win"));
+  el.btnSubmitGameover.addEventListener("click", () =>
+    submitCurrentScore(el.btnSubmitGameover, el.btnSkipGameover, el.submitStatus, levelIndex + 1)
+  );
+  el.btnSkipGameover.addEventListener("click", () =>
+    skipCurrentScore(el.btnSubmitGameover, el.btnSkipGameover, el.submitStatus)
+  );
+  el.btnSubmitWin.addEventListener("click", () =>
+    submitCurrentScore(el.btnSubmitWin, el.btnSkipWin, el.winSubmitStatus, LEVELS.length)
+  );
+  el.btnSkipWin.addEventListener("click", () =>
+    skipCurrentScore(el.btnSubmitWin, el.btnSkipWin, el.winSubmitStatus)
+  );
 
   getMode().then((mode) => {
     el.firebaseStatus.textContent =

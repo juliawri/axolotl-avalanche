@@ -95,7 +95,11 @@
         <div class="stat-card"><span class="stat-label">Score</span><span id="finalScore" class="stat-value">0</span></div>
         <div class="stat-card"><span class="stat-label">Stretch reached</span><span id="finalLevel" class="stat-value">1</span></div>
       </div>
-      <div id="submit-status" class="submit-status"></div>
+      <div id="submit-status" class="submit-status">Add your score to the global leaderboard?</div>
+      <div class="leaderboard-choice-row">
+        <button id="btn-submit-gameover" class="btn btn-choice btn-primary">✅ Add me</button>
+        <button id="btn-skip-gameover" class="btn btn-choice btn-secondary">🚫 Keep private</button>
+      </div>
       <button id="btn-retry" class="btn btn-primary">Try Again 🔁</button>
       <button id="btn-gameover-leaderboard" class="btn btn-secondary">🏆 Leaderboard</button>
     </section>
@@ -109,7 +113,11 @@
         <div class="stat-card"><span class="stat-label">Final Score</span><span id="winScore" class="stat-value">0</span></div>
         <div class="stat-card"><span class="stat-label">Lives left</span><span id="winLives" class="stat-value">3</span></div>
       </div>
-      <div id="win-submit-status" class="submit-status"></div>
+      <div id="win-submit-status" class="submit-status">Add your score to the global leaderboard?</div>
+      <div class="leaderboard-choice-row">
+        <button id="btn-submit-win" class="btn btn-choice btn-primary">✅ Add me</button>
+        <button id="btn-skip-win" class="btn btn-choice btn-secondary">🚫 Keep private</button>
+      </div>
       <button id="btn-play-again" class="btn btn-primary">Play Again 🔁</button>
       <button id="btn-win-leaderboard" class="btn btn-secondary">🏆 Leaderboard</button>
     </section>
