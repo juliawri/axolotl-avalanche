@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Axolotl Avalanche 🦎❄️</title>
+<meta name="description" content="Climb the mountain, dodge the avalanche, and reach Axolotl Archipelago!" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦎</text></svg>" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="app">
+
+    <!-- ============ START SCREEN ============ -->
+    <section id="screen-start" class="screen">
+      <div class="title-wrap">
+        <h1 class="game-title">Axolotl<br/>Avalanche</h1>
+        <p class="subtitle">🏔️ Climb the mountain &middot; dodge the avalanche &middot; reach the Archipelago! 🏝️</p>
+      </div>
+
+      <div class="hero-row">
+        <img src="assets/lilypad.png" alt="lilypad" class="hero-img spin-slow" />
+        <img src="assets/axolotl-cute.png" alt="axolotl" class="hero-img bounce" />
+      </div>
+
+      <div class="howto">
+        <p><strong>🎮 Move:</strong> Arrow keys / A-D, or just move your mouse / drag on mobile</p>
+        <p><strong>🎯 Goal:</strong> Catch axolotls on your lilypad. Dodge rocks, snow &amp; blizzard spirits!</p>
+        <p><strong>❤️ Lives:</strong> 3 hits and you're out. Survive all 3 stretches to reach Axolotl Archipelago!</p>
+      </div>
+
+      <div class="name-entry">
+        <label for="player-name">Your name for the leaderboard:</label>
+        <input id="player-name" maxlength="16" placeholder="Axolotl Fan" autocomplete="off" />
+      </div>
+
+      <button id="btn-start" class="btn btn-primary">Start Climbing 🐾</button>
+      <button id="btn-show-leaderboard" class="btn btn-secondary">🏆 Leaderboard</button>
+
+      <p id="firebase-status" class="firebase-status"></p>
+    </section>
+
+    <!-- ============ GAME SCREEN ============ -->
+    <section id="screen-game" class="screen hidden">
+      <div id="hud">
+        <div class="hud-left">
+          <div id="lives" class="hud-pill"></div>
+        </div>
+        <div class="hud-center">
+          <div id="level-banner" class="hud-pill level-pill">Stretch 1: Base Camp</div>
+          <div class="mountain-progress-track">
+            <div id="mountain-progress-fill" class="mountain-progress-fill"></div>
+            <span class="progress-flag start-flag">⛺</span>
+            <span class="progress-flag end-flag">🏝️</span>
+          </div>
+        </div>
+        <div class="hud-right">
+          <div id="score" class="hud-pill">Score: 0</div>
+        </div>
+      </div>
+
+      <div id="canvas-wrap">
+        <canvas id="game-canvas"></canvas>
+        <div id="floating-banner" class="floating-banner hidden"></div>
+        <div id="countdown-overlay" class="countdown-overlay hidden"></div>
+      </div>
+    </section>
+
+    <!-- ============ GAME OVER SCREEN ============ -->
+    <section id="screen-gameover" class="screen hidden">
+      <h2 class="result-title">❄️ Avalanche got you! ❄️</h2>
+      <p class="result-sub">You made it partway up the mountain.</p>
+      <div class="result-stats">
+        <div class="stat-card"><span class="stat-label">Score</span><span id="finalScore" class="stat-value">0</span></div>
+        <div class="stat-card"><span class="stat-label">Stretch reached</span><span id="finalLevel" class="stat-value">1</span></div>
+      </div>
+      <div id="submit-status" class="submit-status"></div>
+      <button id="btn-retry" class="btn btn-primary">Try Again 🔁</button>
+      <button id="btn-gameover-leaderboard" class="btn btn-secondary">🏆 Leaderboard</button>
+    </section>
+
+    <!-- ============ WIN SCREEN ============ -->
+    <section id="screen-win" class="screen hidden">
+      <h2 class="result-title win-title">🏝️ Welcome to Axolotl Archipelago! 🏝️</h2>
+      <p class="result-sub">You braved the whole avalanche and made it to the top!</p>
+      <div class="confetti-row">🎉🦎🎉🦎🎉🦎🎉</div>
+      <div class="result-stats">
+        <div class="stat-card"><span class="stat-label">Final Score</span><span id="winScore" class="stat-value">0</span></div>
+        <div class="stat-card"><span class="stat-label">Lives left</span><span id="winLives" class="stat-value">3</span></div>
+      </div>
+      <div id="win-submit-status" class="submit-status"></div>
+      <button id="btn-play-again" class="btn btn-primary">Play Again 🔁</button>
+      <button id="btn-win-leaderboard" class="btn btn-secondary">🏆 Leaderboard</button>
+    </section>
+
+    <!-- ============ LEADERBOARD MODAL ============ -->
+    <section id="screen-leaderboard" class="screen hidden">
+      <h2 class="result-title">🏆 Top Climbers 🏆</h2>
+      <div id="leaderboard-source" class="leaderboard-source"></div>
+      <ol id="leaderboard-list" class="leaderboard-list">
+        <li class="leaderboard-empty">Loading…</li>
+      </ol>
+      <button id="btn-close-leaderboard" class="btn btn-primary">Back</button>
+    </section>
+
+  </div>
+
+  <script type="module" src="firebase-config.js"></script>
+  <script type="module" src="leaderboard.js"></script>
+  <script type="module" src="game.js"></script>
+</body>
+</html>
