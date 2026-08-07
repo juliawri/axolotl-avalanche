@@ -32,6 +32,31 @@ const HAZARD_TYPES = [
 const EMOJI_FONT_STACK =
   "'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji',sans-serif";
 
+// Some browsers (notably Safari in Private Browsing, which restricts canvas
+// font access to reduce fingerprinting) refuse to draw color emoji glyphs
+// via ctx.fillText and silently fall back to an outline-only font instead.
+// To sidestep that, emoji are rendered once into an offscreen SVG image
+// (using the browser's normal text renderer, which isn't restricted) and
+// then blitted onto the canvas with drawImage, which works everywhere.
+const EMOJI_IMG_BASE = 128;
+const emojiImageCache = new Map();
+function getEmojiImage(text, aspectRatio = 1) {
+  let img = emojiImageCache.get(text);
+  if (img) return img;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const h = EMOJI_IMG_BASE * dpr;
+  const w = Math.round(h * aspectRatio);
+  const fontSize = Math.round(h * 0.82);
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}">` +
+    `<text x="50%" y="52%" text-anchor="middle" dominant-baseline="middle" ` +
+    `font-size="${fontSize}" font-family="${EMOJI_FONT_STACK}">${text}</text></svg>`;
+  img = new Image();
+  img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+  emojiImageCache.set(text, img);
+  return img;
+}
+
 
 // Eight timed stretches up the mountain, each faster & denser than the last.
 const LEVELS = [
@@ -207,6 +232,27 @@ async function loadAllImages() {
   const entries = Object.entries(IMAGE_SOURCES);
   const loaded = await Promise.all(entries.map(([, src]) => loadImage(src)));
   entries.forEach(([key], i) => (images[key] = loaded[i]));
+  await warmEmojiImages();
+}
+
+function warmEmojiImages() {
+  const requests = [
+    ...HAZARD_TYPES.map((h) => [h.char, 1]),
+    ["🏝️ 🌴 🏝️", 3.3],
+  ];
+  return Promise.all(
+    requests.map(
+      ([text, aspectRatio]) =>
+        new Promise((resolve) => {
+          const img = getEmojiImage(text, aspectRatio);
+          if (img.complete) resolve();
+          else {
+            img.onload = resolve;
+            img.onerror = resolve;
+          }
+        })
+    )
+  );
 }
 
 function formatTime(sec) {
@@ -643,9 +689,12 @@ function drawBackground() {
   if (lvl.bg === "storm") {
     ctx.save();
     ctx.globalAlpha = 0.5;
-    ctx.font = `${Math.max(16, W * 0.05)}px ${EMOJI_FONT_STACK}`;
-    ctx.textAlign = "center";
-    ctx.fillText("🏝️ 🌴 🏝️", W / 2, H * 0.1);
+    const bannerImg = getEmojiImage("🏝️ 🌴 🏝️", 3.3);
+    if (bannerImg.complete && bannerImg.naturalWidth) {
+      const bh = Math.max(16, W * 0.05) * 1.3;
+      const bw = bh * 3.3;
+      ctx.drawImage(bannerImg, W / 2 - bw / 2, H * 0.1 - bh / 2, bw, bh);
+    }
     ctx.restore();
   }
 
@@ -712,10 +761,11 @@ function drawItem(it) {
       ctx.drawImage(img, -dw / 2, -dh / 2, dw, dh);
     }
   } else {
-    ctx.font = `${s * 0.9}px ${EMOJI_FONT_STACK}`;
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText(it.char, 0, 0);
+    const img = getEmojiImage(it.char);
+    if (img.complete && img.naturalWidth) {
+      const size = s * 1.05;
+      ctx.drawImage(img, -size / 2, -size / 2, size, size);
+    }
   }
   ctx.restore();
 }
