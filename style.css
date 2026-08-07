@@ -138,6 +138,28 @@ body::after {
 }
 .howto p { margin: 4px 0; }
 
+.howto-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0 0;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(0,0,0,0.12);
+}
+.howto-label { font-weight: 700; white-space: nowrap; }
+.howto-icons { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.howto-icon-img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  background: rgba(255,255,255,0.55);
+  border-radius: 50%;
+  padding: 2px;
+}
+.howto-icon-rare { box-shadow: 0 0 0 2px #4fc3f7; }
+.howto-icon-emoji { font-size: 1.4rem; line-height: 1; }
+.howto-avoid .howto-icons { filter: saturate(1); }
+
 .name-entry {
   display: flex;
   flex-direction: column;

@@ -54,10 +54,5 @@ export const firebaseConfig = {
 // Do not edit below this line — this just checks whether you've
 // actually filled in real values above.
 export function isFirebaseConfigured() {
-  return (
-    firebaseConfig.apiKey &&
-    !firebaseConfig.apiKey &&
-    firebaseConfig.projectId &&
-    !firebaseConfig.projectId
-  );
+  return Boolean(firebaseConfig.apiKey && firebaseConfig.projectId);
 }

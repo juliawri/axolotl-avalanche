@@ -18,6 +18,7 @@ const AXOLOTL_TYPES = [
   { key: "cute", weight: 6, points: 10 },
   { key: "photo", weight: 3, points: 10 },
   { key: "reading", weight: 1, points: 25 }, // rare bonus catch
+  { key: "blizzard", weight: 2, points: 15 }, // rare blue axolotl
 ];
 
 const HAZARD_TYPES = [
@@ -26,37 +27,84 @@ const HAZARD_TYPES = [
   { kind: "emoji", char: "🧊", weight: 2 },
   { kind: "emoji", char: "⛄", weight: 1 },
   { kind: "emoji", char: "⚡", weight: 1 },
-  { kind: "image", key: "blizzard", weight: 2 },
 ];
 
+const EMOJI_FONT_STACK =
+  "'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji',sans-serif";
 
-// Three timed stretches up the mountain, each faster & denser than the last.
+
+// Eight timed stretches up the mountain, each faster & denser than the last.
 const LEVELS = [
   {
     name: "Stretch 1: Base Camp",
-    duration: 45,
-    baseSpeed: 130,
-    spawnInterval: 950,
-    hazardChance: 0.16,
+    duration: 25,
+    baseSpeed: 120,
+    spawnInterval: 1000,
+    hazardChance: 0.14,
+    ramp: 3,
+    bg: "day",
+  },
+  {
+    name: "Stretch 2: Pine Trail",
+    duration: 25,
+    baseSpeed: 150,
+    spawnInterval: 900,
+    hazardChance: 0.17,
     ramp: 3.5,
     bg: "day",
   },
   {
-    name: "Stretch 2: Frozen Ridge",
-    duration: 45,
-    baseSpeed: 200,
+    name: "Stretch 3: Frozen Ridge",
+    duration: 25,
+    baseSpeed: 180,
+    spawnInterval: 800,
+    hazardChance: 0.2,
+    ramp: 4,
+    bg: "dusk",
+  },
+  {
+    name: "Stretch 4: Icy Pass",
+    duration: 25,
+    baseSpeed: 210,
     spawnInterval: 720,
     hazardChance: 0.23,
     ramp: 4.5,
     bg: "dusk",
   },
   {
+    name: "Stretch 5: Windswept Slope",
+    duration: 25,
+    baseSpeed: 240,
+    spawnInterval: 650,
+    hazardChance: 0.26,
+    ramp: 5,
+    bg: "dusk",
+  },
+  {
+    name: "Stretch 6: Glacier Field",
+    duration: 25,
+    baseSpeed: 260,
+    spawnInterval: 580,
+    hazardChance: 0.28,
+    ramp: 5.5,
+    bg: "storm",
+  },
+  {
+    name: "Stretch 7: Blizzard Climb",
+    duration: 25,
+    baseSpeed: 280,
+    spawnInterval: 520,
+    hazardChance: 0.3,
+    ramp: 6,
+    bg: "storm",
+  },
+  {
     name: "Final Stretch: Summit Blizzard",
     duration: 30,
-    baseSpeed: 290,
-    spawnInterval: 480,
-    hazardChance: 0.32,
-    ramp: 6,
+    baseSpeed: 300,
+    spawnInterval: 460,
+    hazardChance: 0.33,
+    ramp: 6.5,
     bg: "storm",
   },
 ];
@@ -579,7 +627,7 @@ function drawBackground() {
   if (lvl.bg === "storm") {
     ctx.save();
     ctx.globalAlpha = 0.5;
-    ctx.font = `${Math.max(16, W * 0.05)}px sans-serif`;
+    ctx.font = `${Math.max(16, W * 0.05)}px ${EMOJI_FONT_STACK}`;
     ctx.textAlign = "center";
     ctx.fillText("🏝️ 🌴 🏝️", W / 2, H * 0.1);
     ctx.restore();
@@ -648,7 +696,7 @@ function drawItem(it) {
       ctx.drawImage(img, -dw / 2, -dh / 2, dw, dh);
     }
   } else {
-    ctx.font = `${s * 0.9}px sans-serif`;
+    ctx.font = `${s * 0.9}px ${EMOJI_FONT_STACK}`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(it.char, 0, 0);

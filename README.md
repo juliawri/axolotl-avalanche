@@ -1,14 +1,14 @@
 # 🦎 Axolotl Avalanche
 
-Ride your lilypad up the mountain, catch friendly axolotls, dodge rocks / snow / blizzard spirits, and survive all three stretches to reach **Axolotl Archipelago**!
+Ride your lilypad up the mountain, catch friendly axolotls (including the rare blue blizzard spirit), dodge rocks / snow, and survive all three stretches to reach **Axolotl Archipelago**!
 
 A pure HTML + CSS + JavaScript game — no build step, no dependencies to install. Just open it or deploy it straight to GitHub Pages.
 
 ## 🎮 How to play
 
 - **Move:** Arrow keys or A/D on desktop — or just move your mouse / drag with your finger on mobile. Both work at the same time.
-- **Catch:** Steer your lilypad under falling axolotls to score points. The rare "reading" axolotl is worth a bonus!
-- **Dodge:** Avoid rocks 🪨, snow ❄️, ice 🧊, snowmen ⛄, lightning ⚡, and blizzard spirits — getting hit costs a life.
+- **Catch:** Steer your lilypad under falling axolotls to score points. The rare "reading" axolotl and the blue blizzard spirit axolotl are both worth a bonus!
+- **Dodge:** Avoid rocks 🪨, snow ❄️, ice 🧊, snowmen ⛄, and lightning ⚡ — getting hit costs a life.
 - **Lives:** You start with 3. Lose all 3 and the avalanche gets you.
 - **Climb:** Survive 3 timed stretches — each one faster and snowier than the last — to reach Axolotl Archipelago and win!
 
