@@ -29,6 +29,7 @@ const HAZARD_TYPES = [
   { kind: "image", key: "blizzard", weight: 2 },
 ];
 
+
 // Three timed stretches up the mountain, each faster & denser than the last.
 const LEVELS = [
   {
