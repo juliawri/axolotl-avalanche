@@ -25,8 +25,8 @@ const HAZARD_TYPES = [
   { kind: "emoji", char: "🪨", weight: 3 },
   { kind: "emoji", char: "❄️", weight: 3 },
   { kind: "emoji", char: "🧊", weight: 2 },
-  { kind: "emoji", char: "⛄", weight: 1 },
-  { kind: "emoji", char: "⚡", weight: 1 },
+  { kind: "emoji", char: "⛄️", weight: 1 },
+  { kind: "emoji", char: "⚡️", weight: 1 },
 ];
 
 const EMOJI_FONT_STACK =
@@ -37,8 +37,8 @@ const EMOJI_FONT_STACK =
 const LEVELS = [
   {
     name: "Stretch 1: Base Camp",
-    duration: 25,
-    baseSpeed: 120,
+    duration: 45,
+    baseSpeed: 145,
     spawnInterval: 1000,
     hazardChance: 0.14,
     ramp: 3,
@@ -46,8 +46,8 @@ const LEVELS = [
   },
   {
     name: "Stretch 2: Pine Trail",
-    duration: 25,
-    baseSpeed: 150,
+    duration: 45,
+    baseSpeed: 175,
     spawnInterval: 900,
     hazardChance: 0.17,
     ramp: 3.5,
@@ -55,8 +55,8 @@ const LEVELS = [
   },
   {
     name: "Stretch 3: Frozen Ridge",
-    duration: 25,
-    baseSpeed: 180,
+    duration: 45,
+    baseSpeed: 205,
     spawnInterval: 800,
     hazardChance: 0.2,
     ramp: 4,
@@ -64,8 +64,8 @@ const LEVELS = [
   },
   {
     name: "Stretch 4: Icy Pass",
-    duration: 25,
-    baseSpeed: 210,
+    duration: 45,
+    baseSpeed: 235,
     spawnInterval: 720,
     hazardChance: 0.23,
     ramp: 4.5,
@@ -73,8 +73,8 @@ const LEVELS = [
   },
   {
     name: "Stretch 5: Windswept Slope",
-    duration: 25,
-    baseSpeed: 240,
+    duration: 45,
+    baseSpeed: 265,
     spawnInterval: 650,
     hazardChance: 0.26,
     ramp: 5,
@@ -82,8 +82,8 @@ const LEVELS = [
   },
   {
     name: "Stretch 6: Glacier Field",
-    duration: 25,
-    baseSpeed: 260,
+    duration: 45,
+    baseSpeed: 285,
     spawnInterval: 580,
     hazardChance: 0.28,
     ramp: 5.5,
@@ -91,8 +91,8 @@ const LEVELS = [
   },
   {
     name: "Stretch 7: Blizzard Climb",
-    duration: 25,
-    baseSpeed: 280,
+    duration: 45,
+    baseSpeed: 305,
     spawnInterval: 520,
     hazardChance: 0.3,
     ramp: 6,
@@ -101,7 +101,7 @@ const LEVELS = [
   {
     name: "Final Stretch: Summit Blizzard",
     duration: 30,
-    baseSpeed: 300,
+    baseSpeed: 325,
     spawnInterval: 460,
     hazardChance: 0.33,
     ramp: 6.5,

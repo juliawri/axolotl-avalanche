@@ -157,8 +157,11 @@ body::after {
   padding: 2px;
 }
 .howto-icon-rare { box-shadow: 0 0 0 2px #4fc3f7; }
-.howto-icon-emoji { font-size: 1.4rem; line-height: 1; }
-.howto-avoid .howto-icons { filter: saturate(1); }
+.howto-icon-emoji {
+  font-size: 1.4rem;
+  line-height: 1;
+  font-family: 'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji',sans-serif;
+}
 
 .name-entry {
   display: flex;
